@@ -1,4 +1,5 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.Utility;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,30 @@ namespace BulkyBook.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(Tools.UppercaseFirst(includeProp));
+                }
+            }
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
-            return dbSet.FirstOrDefault(filter);
+            IQueryable<T> query = dbSet;
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(Tools.UppercaseFirst(includeProp));
+                }
+            }
+            return query.FirstOrDefault(filter);
         }
 
         public void Remove(T entity)
@@ -42,6 +58,6 @@ namespace BulkyBook.DataAccess.Repository
         public void RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
-        }
+        }      
     }
 }
