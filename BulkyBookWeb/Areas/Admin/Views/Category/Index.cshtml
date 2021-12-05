@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Category>
+﻿@model IEnumerable<
+    Category>
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,7 +9,7 @@
             <h2 class="text-primary">Category List</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+            <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i>&nbsp;Create New Category
             </a>
         </div>
@@ -39,8 +40,8 @@
                     @item.DisplayOrder
                 </td>
                 <td role="group" class="btn-group w-100">
-                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>&nbsp;Edit</a>
-                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2"><i class="bi bi-trash"></i>&nbsp;Delete</a>
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>&nbsp;Edit</a>
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2"><i class="bi bi-trash"></i>&nbsp;Delete</a>
                 </td>
             </tr>
         }
