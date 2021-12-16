@@ -28,6 +28,7 @@ namespace BulkyBook.DataAccess.Repository
             var orderFromDb = _db.OrderHeaders.Find(id);
             orderFromDb.SessionId = sessionId;
             orderFromDb.PaymentIntentId = paymentIntentId;
+            orderFromDb.PaymentDate = DateTime.Now;
         }
 
         public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)

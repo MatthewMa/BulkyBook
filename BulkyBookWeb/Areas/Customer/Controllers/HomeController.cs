@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 
 namespace BulkyBookWeb.Controllers;
@@ -70,5 +71,19 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+    [HttpGet]
+    public ActionResult<int> GetCartNumber()
+    {
+        if (User == null)
+            return 0;
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+        if (claim == null || claim.Value == string.Empty)
+            return 0;
+        var shoppingCartFound = _unitOfWork.ShoppingCart.GetShoppingCartByUserApplicationId(claim.Value);
+        if (shoppingCartFound == null)
+            return 0;
+        return shoppingCartFound.ToList().Count;
     }
 }

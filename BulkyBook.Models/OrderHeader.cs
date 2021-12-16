@@ -17,14 +17,21 @@ namespace BulkyBook.Models
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
         public DateTime OrderDate { get; set; }
+        [DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
         public DateTime? ShippingDate { get; set; }
         public double OrderTotal { get; set; }
         public string? OrderStatus { get; set; }
         public string? PaymentStatus { get; set; }
         public string? TrackingNumber { get; set; }
         public string? Carrier { get; set; }
+        [DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
+        [DataType(DataType.Date)]
         public DateTime PaymentDate { get; set; }
+        [DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
+        [DataType(DataType.Date)]
         public DateTime PaymentDueDate { get; set; }
         // Stripe use
         public string? SessionId { get; set; }
