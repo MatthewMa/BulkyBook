@@ -228,6 +228,10 @@
 									</div>
 								</li>
 							</ul>
+							@if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment && Model.OrderHeader.OrderStatus == SD.StatusShipped)
+							{
+								<input type="submit" class="btn btn-success form-control my-1" value="Pay Now" asp-action="PayNow"/>
+							}
 							@if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
 							{
 								if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
@@ -238,10 +242,7 @@
 								{
 									<input type="submit" class="btn btn-primary form-control my-1" value="Ship Order" asp-action="StartShipping" onclick = "return ValidateInput()"/>
 								}
-								if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment && Model.OrderHeader.OrderStatus == SD.StatusShipped)
-								{
-									<input type="submit" class="btn btn-success form-control my-1" value="Pay Now" asp-action="PayNow"/>
-								}
+								
 								if (Model.OrderHeader.OrderStatus != SD.StatusRefunded && Model.OrderHeader.OrderStatus != SD.StatusCancelled && Model.OrderHeader.OrderStatus != SD.StatusShipped)
 								{
 									<input type="submit" class="btn btn-danger form-control my-1" value="Cancel Order" asp-action="CancelOrder"/>
